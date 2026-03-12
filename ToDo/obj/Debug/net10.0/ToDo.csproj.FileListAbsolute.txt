@@ -1,0 +1,15 @@
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.AssemblyInfoInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.AssemblyInfo.cs
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.csproj.CoreCompileInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.sourcelink.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/bin/Debug/net10.0/ToDo
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/bin/Debug/net10.0/ToDo.deps.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/bin/Debug/net10.0/ToDo.runtimeconfig.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/bin/Debug/net10.0/ToDo.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/bin/Debug/net10.0/ToDo.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/refint/ToDo.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ToDo.genruntimeconfig.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/ToDo/obj/Debug/net10.0/ref/ToDo.dll

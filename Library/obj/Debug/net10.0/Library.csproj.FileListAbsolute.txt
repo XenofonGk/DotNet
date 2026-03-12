@@ -1,0 +1,15 @@
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.GeneratedMSBuildEditorConfig.editorconfig
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.AssemblyInfoInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.AssemblyInfo.cs
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.csproj.CoreCompileInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.sourcelink.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/bin/Debug/net10.0/Library
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/bin/Debug/net10.0/Library.deps.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/bin/Debug/net10.0/Library.runtimeconfig.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/bin/Debug/net10.0/Library.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/bin/Debug/net10.0/Library.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/refint/Library.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/Library.genruntimeconfig.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Library/obj/Debug/net10.0/ref/Library.dll

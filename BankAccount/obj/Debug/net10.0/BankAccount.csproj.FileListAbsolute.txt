@@ -1,0 +1,15 @@
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/bin/Debug/net10.0/BankAccount
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/bin/Debug/net10.0/BankAccount.deps.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/bin/Debug/net10.0/BankAccount.runtimeconfig.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/bin/Debug/net10.0/BankAccount.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/bin/Debug/net10.0/BankAccount.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.GeneratedMSBuildEditorConfig.editorconfig
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.AssemblyInfoInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.AssemblyInfo.cs
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.csproj.CoreCompileInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.sourcelink.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/refint/BankAccount.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/BankAccount.genruntimeconfig.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/BankAccount/obj/Debug/net10.0/ref/BankAccount.dll

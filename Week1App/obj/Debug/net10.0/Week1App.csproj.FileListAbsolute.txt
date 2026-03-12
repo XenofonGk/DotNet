@@ -1,0 +1,15 @@
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/bin/Debug/net10.0/Week1App
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/bin/Debug/net10.0/Week1App.deps.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/bin/Debug/net10.0/Week1App.runtimeconfig.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/bin/Debug/net10.0/Week1App.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/bin/Debug/net10.0/Week1App.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.GeneratedMSBuildEditorConfig.editorconfig
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.AssemblyInfoInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.AssemblyInfo.cs
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.csproj.CoreCompileInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.sourcelink.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/refint/Week1App.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/Week1App.genruntimeconfig.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/Week1App/obj/Debug/net10.0/ref/Week1App.dll

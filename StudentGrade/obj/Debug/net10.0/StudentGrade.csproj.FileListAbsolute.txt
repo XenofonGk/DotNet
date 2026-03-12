@@ -1,0 +1,15 @@
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.GeneratedMSBuildEditorConfig.editorconfig
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.AssemblyInfoInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.AssemblyInfo.cs
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.csproj.CoreCompileInputs.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.sourcelink.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/bin/Debug/net10.0/StudentGrade
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/bin/Debug/net10.0/StudentGrade.deps.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/bin/Debug/net10.0/StudentGrade.runtimeconfig.json
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/bin/Debug/net10.0/StudentGrade.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/bin/Debug/net10.0/StudentGrade.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/refint/StudentGrade.dll
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.pdb
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/StudentGrade.genruntimeconfig.cache
+/Users/xenofongk/Documents/INTERSHIP PREPARATION/dotnet/StudentGrade/obj/Debug/net10.0/ref/StudentGrade.dll
