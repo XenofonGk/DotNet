@@ -10,6 +10,8 @@ namespace MyProject.Controllers;
 /// </summary>
 public class HomeController : Controller
 {
+
+    public string? Name { get; set; }
     // The Index action is the entry point for the home page.
     // When a user navigates to '/' or '/Home/Index', this method is executed.
     public IActionResult Index()

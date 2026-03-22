@@ -1,0 +1,15 @@
+@model Category
+
+    @using MyProject.Models 
+
+
+<form asp-action="Create" method="post">
+<fieldset>
+    <legend>Add Name & Display Order</legend>
+    <label for="Name">Name:</label>
+    <input asp-for="Name" class="form-control">
+    <label for="DisplayOrder">Display Order:</label>
+    <input asp-for="DisplayOrder" class="form-control">
+</fieldset>
+<button type="submit">Submit</button>
+</form>

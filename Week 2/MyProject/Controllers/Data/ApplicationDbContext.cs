@@ -1,5 +1,7 @@
-using Myproject.Models;
+using MyProject.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
+using System.Dynamic;
 
 namespace MyProject.Data;
 
@@ -19,4 +21,9 @@ public class ApplicationDbContext : DbContext
     // Entity Framework will automatically create a 'Categories' table based on the 'Category' model.
     // This property allows us to query and save data for categories.
     public DbSet<Category> Categories { get; set; }
+
+    // another representation of a table in the database
+    // Entity Framework will create a Supplier table based on the Supplier model
+    // it allows us to query and save data for Suppliers
+    public DbSet<Supplier> Supplier { get; set; }
 }

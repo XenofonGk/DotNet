@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Myproject.Models;
+namespace MyProject.Models;
 
 /// <summary>
 /// This class represents a 'Category' entity in the database.

@@ -1,0 +1,18 @@
+@model Supplier
+
+    @using MyProject.Models 
+
+
+<form asp-action="Edit" method="post">
+<fieldset>
+    <legend>Edit Suppliers</legend>
+    <input asp-for="Id" type="hidden">
+    <label for="Name">Name:</label>
+    <input asp-for="Name" class="form-control">
+    <label for="ContactEmail">Contact Email:</label>
+    <input asp-for="ContactEmail" class="form-control">
+     <label for="Country">Country:</label>
+    <input asp-for="Country" class="form-control">
+</fieldset>
+<button type="submit">Update</button>
+</form>
