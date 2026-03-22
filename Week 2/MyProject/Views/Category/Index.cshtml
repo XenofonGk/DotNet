@@ -1,20 +1,23 @@
-@model IEnumerable<Category>
-@* @model tells the view what type of data to expect from the controlller
-   the view knows its getting a list of categories and give you full intelliSense and type safety  *@
-
+@using MyProject.ViewModels
 @using MyProject.Models 
 
 
-   @{
+@model CategoryVM
+@* @model tells the view what type of data to expect from the controlller
+   the view knows its getting a list of categories and give you full intelliSense and type safety  *@
+
+
+@{
     ViewData["Title"] = "Category List";
 }
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb3">
-        <h2>Category List</h2>
+        <h2>@Model.PageTitle</h2>
+        <p>Total: @Model.TotalCount categories</p>
         <a asp-controller="Category" asp-action="Create" class="btn btn-primary"> 
-            + Create New Category
-        </a>
+           + Create New Category
+         </a>
     </div>
     @* asp-controller and asp-action are Tag Helpers. They generate the href for you dynamically. So asp-controller="Category" asp-action="Create" generates href="/Category/Create" automatically.
 The advantage over hardcoding href="/Category/Create" — if you ever change your routing structure, Tag Helpers update all links automatically. Hardcoded href breaks.*@
@@ -28,7 +31,7 @@ The advantage over hardcoding href="/Category/Create" — if you ever change you
             </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model){
+        @foreach (var item in Model.Categories){
             <tr>
               <td>@item.Id</td>
               <td>@item.Name</td>

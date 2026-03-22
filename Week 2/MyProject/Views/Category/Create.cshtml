@@ -6,10 +6,17 @@
 <form asp-action="Create" method="post">
 <fieldset>
     <legend>Add Name & Display Order</legend>
+    <div asp-validation-summary="All" class="text-danger"></div>
     <label for="Name">Name:</label>
+    <span asp-validation-for="Name" class="text-danger"></span>
     <input asp-for="Name" class="form-control">
-    <label for="DisplayOrder">Display Order:</label>
+    <label for="DisplayOrder">Display Order:</label>  
+    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
     <input asp-for="DisplayOrder" class="form-control">
 </fieldset>
 <button type="submit">Submit</button>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

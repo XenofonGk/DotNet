@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel;
 
 namespace MyProject.Models;
 
@@ -21,6 +21,7 @@ public class Supplier
 
     // Defines Contac email also required
     [Required]
+    [DisplayName("Contact Email")]
     public string? ContactEmail { get; set; }
 
     // Defines the country 

@@ -6,13 +6,18 @@
 <form asp-action="Edit" method="post">
 <fieldset>
     <legend>Edit Suppliers</legend>
+    <div asp-validation-summary="All" class="text-danger"></div>
     <input asp-for="Id" type="hidden">
     <label for="Name">Name:</label>
+    <span asp-validation-for="Name" class="text-danger"></span>
     <input asp-for="Name" class="form-control">
     <label for="ContactEmail">Contact Email:</label>
+    <span asp-validation-for="ContactEmail" class="text-danger"></span>
     <input asp-for="ContactEmail" class="form-control">
      <label for="Country">Country:</label>
     <input asp-for="Country" class="form-control">
 </fieldset>
 <button type="submit">Update</button>
 </form>
+
+

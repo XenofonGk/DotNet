@@ -32,6 +32,7 @@ public class SupplierController : Controller
             {
                 _db.Supplier.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Supplier Created Succesfully";
             return RedirectToAction("Index");
             }
             return View(obj);
@@ -59,6 +60,7 @@ public class SupplierController : Controller
             {
                 _db.Supplier.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Supplier Edited Succesfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -92,6 +94,7 @@ public class SupplierController : Controller
             }
             _db.Supplier.Remove(supplier);
             _db.SaveChanges();
+         TempData["Success"] = "Category Deleted Succesfully";
 
             return RedirectToAction("Index");
         }

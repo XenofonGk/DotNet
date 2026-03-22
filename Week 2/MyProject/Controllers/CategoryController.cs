@@ -2,6 +2,7 @@ using System.ComponentModel.Design;
 using Microsoft.AspNetCore.Mvc;
 using MyProject.Data;
 using MyProject.Models;
+using MyProject.ViewModels;
 namespace MyProject.Controllers{
 
 public class CategoryController : Controller
@@ -15,13 +16,22 @@ public class CategoryController : Controller
     }
 
     // Getting all categories from db and pass to view
+    // [Route("categories")]
     public IActionResult Index()
     {
+        // Before we change it to ViewModel
         // _db.Categories which is a DbSet<Category>
-        var objCategoryList = _db.Categories.ToList();
+        // var objCategoryList = _db.Categories.ToList();
 
-        return View(objCategoryList);
+        // return View(objCategoryList);
 
+        var vm = new CategoryVM
+        {
+            Categories = _db.Categories.ToList(),
+            PageTitle = "Category List",
+            TotalCount = _db.Categories.Count()
+        };
+        return View(vm);
     }
 
     public IActionResult Create()
@@ -38,8 +48,11 @@ public class CategoryController : Controller
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category Created Succesfully";
             return RedirectToAction("Index");
             }
+                              
+
             return View(obj);
         }
 
@@ -64,6 +77,7 @@ public class CategoryController : Controller
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+            TempData["success"] = "Category Edited Succesfully";
             return RedirectToAction("Index");
             }
             return View(obj);
@@ -93,7 +107,9 @@ public class CategoryController : Controller
                 return NotFound();
             }        
          _db.Categories.Remove(category);
-         _db.SaveChanges();
+         _db.SaveChanges();            
+         TempData["Success"] = "Category Deleted Succesfully";
+
 
          return RedirectToAction("Index");
 
