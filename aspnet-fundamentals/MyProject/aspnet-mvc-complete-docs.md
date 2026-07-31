@@ -55,7 +55,7 @@ User types /Category/Index
 ## SQL Server Setup (Docker)
 Run SQL Server locally without installing it:
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourPass123!" \
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<your-local-password>" \
   -p 1433:1433 --name sqlserver \
   -d mcr.microsoft.com/mssql/server:2022-latest
 ```
@@ -72,7 +72,7 @@ Key points:
 Tells EF Core where to find the database. Stored separately from code:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost,1433;Database=MyDb;User Id=sa;Password=YourPass123!;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=localhost,1433;Database=MyDb;User Id=sa;Password=<your-local-password>;TrustServerCertificate=True;"
 }
 ```
 

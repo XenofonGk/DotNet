@@ -66,7 +66,7 @@ MyProject/
 
 ### 1. Start SQL Server in Docker
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourPass123!" \
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<your-local-password>" \
   -p 1433:1433 --name sqlserver \
   -d mcr.microsoft.com/mssql/server:2022-latest
 ```
@@ -75,7 +75,7 @@ docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourPass123!" \
 Edit `appsettings.json`:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost,1433;Database=MyDb;User Id=sa;Password=YourPass123!;TrustServerCertificate=True;"
+  "DefaultConnection": "Server=localhost,1433;Database=MyDb;User Id=sa;Password=<your-local-password>;TrustServerCertificate=True;"
 }
 ```
 

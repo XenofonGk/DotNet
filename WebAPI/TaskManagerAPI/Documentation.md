@@ -27,7 +27,7 @@ Created `Data/AppDbContext.cs` and installed required NuGet packages:
 Updated `appsettings.json` with the PostgreSQL connection string:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Port=5432;Database=todo_db;Username=postgres;Password=mysecretpassword"
+  "DefaultConnection": "Host=localhost;Port=5432;Database=todo_db;Username=postgres;Password=<your-local-password>"
 }
 ```
 
