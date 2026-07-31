@@ -65,6 +65,10 @@ artifacts/
 # OS files
 .DS_Store
 Thumbs.db
-```
 
----
+# Environment / secrets
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+appsettings.*.local.json
