@@ -1,14 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using TaskManagerAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// The connection string comes from configuration — environment variables in
+// Docker, user-secrets locally. It is never committed.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-    
+
 builder.Services.AddControllers();
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+// OpenAPI document at /openapi/v1.json
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -17,16 +19,28 @@ app.MapOpenApi();
 
 if (app.Environment.IsDevelopment())
 {
-    // app.UseHttpsRedirection(); // Disabled for easier Docker testing
+    // HTTPS redirection stays off in development so the container can be
+    // reached over plain HTTP without a certificate.
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseHttpsRedirection();
 }
 
 app.MapControllers();
 
-// Apply migrations automatically on startup
+// A liveness endpoint, so a container orchestrator can tell whether the app is
+// up without hitting the database.
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+
+// Applies pending migrations at startup. Convenient for a containerised demo
+// that has to come up from nothing on a clean machine; a production system
+// would run migrations as a deliberate deploy step instead of on boot.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    try 
+    try
     {
         var context = services.GetRequiredService<AppDbContext>();
         context.Database.Migrate();
@@ -38,28 +52,4 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
