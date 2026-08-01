@@ -1,4 +1,4 @@
-# Official .NET 9 SDK to build the app
+# Official .NET 10 SDK to build the app
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /app
 

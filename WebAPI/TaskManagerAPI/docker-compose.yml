@@ -9,18 +9,30 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    # Without this the API can win the race to start, fail its migration
+    # against a database that is not accepting connections yet, and then serve
+    # errors from a schema that was never created.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
 
   api:
     build: .
     restart: always
+    # 5095 matches the port the README and TaskManagerAPI.http use. Publishing
+    # on 80 needed elevated privileges on some hosts and collided with anything
+    # already serving there.
     ports:
-      - "80:8080"
+      - "5095:8080"
     environment:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=postgres;Password=${POSTGRES_PASSWORD}
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:

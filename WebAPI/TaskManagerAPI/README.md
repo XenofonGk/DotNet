@@ -8,26 +8,28 @@ A simple Task Management Web API built with .NET 10 and PostgreSQL, fully contai
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed.
 
 ### Running the App
-1. Clone the repository.
-2. Open a terminal in the project root.
-3. Run the following command:
-   ```bash
-   docker-compose up -d
-   ```
+```bash
+cp .env.example .env      # then edit POSTGRES_PASSWORD
+docker compose up -d --build
+```
 
-The API will be available at: `http://localhost:5095/api/todo`
+The API is then at `http://localhost:5095`, with a liveness probe at
+`http://localhost:5095/health` and the OpenAPI document at
+`http://localhost:5095/openapi/v1.json`.
 
-### Running the App Locally (Optional)
-1. Ensure the database is running:
-   ```bash
-   docker-compose up -d db
-   ```
-2. Run the application:
-   ```bash
-   dotnet run
-   ```
-3. The API will be available at: `http://localhost:5095/api/todo`
+Compose waits for PostgreSQL to report healthy before starting the API. Without
+that gate the API can win the race, fail its migration against a database that
+is not accepting connections yet, and then serve errors from a schema that was
+never created.
 
+Credentials come from `.env`, which is gitignored. Nothing in this repository
+contains a real password.
+
+### Running Locally Without Docker
+```bash
+docker compose up -d db          # database only
+dotnet run
+```
 
 ## 🛠 Tech Stack
 - **Framework:** .NET 10.0

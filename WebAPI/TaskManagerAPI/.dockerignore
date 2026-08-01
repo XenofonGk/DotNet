@@ -1,4 +1,14 @@
+# Build output — the image builds from source, and copying these in bloats the
+# context and can shadow the freshly published binaries.
 bin/
 obj/
-.git/
+**/bin/
+**/obj/
+
+# Local-only
+.env
+appsettings.*.local.json
+.vs/
 .vscode/
+.idea/
+.DS_Store
