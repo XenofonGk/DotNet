@@ -1,0 +1,69 @@
+# Production stack for a single always-free ARM VM.
+#
+# Postgres runs alongside the API rather than on a managed serverless tier,
+# because a box with this much memory has no reason to introduce a cold start.
+# The database is never published to the internet — only Caddy is.
+#
+# Run from the TaskManagerAPI directory. --env-file is required, not optional:
+# Compose resolves a bare .env relative to the compose file's own directory, so
+# without it every variable below renders empty and Postgres refuses to
+# initialise with an unhelpful error.
+#
+#   docker compose --env-file .env -f deploy/docker-compose.prod.yml up -d --build
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # No ports section on purpose: the database is reachable only from the
+    # compose network, never from outside the host.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=postgres;Password=${POSTGRES_PASSWORD}
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      # Which origins may call this API from a browser. Comma-free array form:
+      # each index is its own variable.
+      - AllowedOrigins__0=${PORTFOLIO_ORIGIN}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Terminates TLS and proxies to the API. Caddy obtains and renews a
+  # Let's Encrypt certificate on its own, which is why this is not nginx.
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - API_DOMAIN=${API_DOMAIN}
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+  caddy_data:
+  caddy_config:

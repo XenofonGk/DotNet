@@ -1,7 +1,18 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Behind a reverse proxy, so the original scheme and client IP arrive as
+// X-Forwarded-* headers and must be honoured for links and logging to be right.
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    // The proxy runs on the same host and is not in a known network range.
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 // The connection string comes from configuration — environment variables in
 // Docker, user-secrets locally. It is never committed.
@@ -9,6 +20,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
+
+// The portfolio calls this API from a different origin, so without CORS the
+// browser blocks every response before the page can read it. Origins come from
+// configuration rather than a wildcard: "*" cannot be used with credentials and
+// gives away more than is needed.
+const string PortfolioCors = "portfolio";
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+                     ?? new[] { "https://xenofongk.github.io", "http://localhost:4173" };
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(PortfolioCors, policy => policy
+        .WithOrigins(allowedOrigins)
+        .WithMethods("GET", "POST", "PUT", "DELETE")
+        .WithHeaders("Content-Type"));
+});
 
 // OpenAPI document at /openapi/v1.json
 builder.Services.AddOpenApi();
@@ -25,8 +52,13 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseHttpsRedirection();
+    // TLS is terminated by the reverse proxy in front of this container, which
+    // forwards plain HTTP on the internal network. Redirecting here would send
+    // clients into a loop.
+    app.UseForwardedHeaders();
 }
+
+app.UseCors(PortfolioCors);
 
 app.MapControllers();
 
