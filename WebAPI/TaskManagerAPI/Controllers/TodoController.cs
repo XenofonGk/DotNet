@@ -5,6 +5,21 @@ using TaskManagerAPI.Dtos;
 
 namespace TaskManagerAPI.Controllers;
 
+/*
+ * On CSRF: static analysis flags the write endpoints here for missing
+ * antiforgery token validation. That rule assumes the browser attaches ambient
+ * credentials — a cookie or Windows auth — to a cross-site request, which is
+ * what lets an attacker's page act as the victim.
+ *
+ * This service has no authentication, no cookies and no session state, so
+ * there are no ambient credentials to ride on and nothing an attacker gains by
+ * forging a request they could simply send themselves. Adding
+ * [ValidateAntiForgeryToken] would also break the API for its actual clients,
+ * since a JSON caller has no way to obtain a token.
+ *
+ * If authentication is ever added, this decision has to be revisited.
+ */
+
 /// <summary>
 ///     CRUD endpoints over the ToDo entity.
 ///

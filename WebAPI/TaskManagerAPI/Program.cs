@@ -37,18 +37,41 @@ app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 // Applies pending migrations at startup. Convenient for a containerised demo
 // that has to come up from nothing on a clean machine; a production system
 // would run migrations as a deliberate deploy step instead of on boot.
-using (var scope = app.Services.CreateScope())
+//
+// Retried, because the database is not always ready when this process is: a
+// serverless Postgres that has scaled to zero takes a moment to wake, and a
+// compose stack can start both services at once.
+//
+// A failure here is fatal on purpose. Logging and carrying on left the app
+// serving errors from a schema that was never created, which looks like a
+// healthy container and is far harder to diagnose than one that refuses to
+// start.
 {
+    using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
-    try
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    var context = services.GetRequiredService<AppDbContext>();
+
+    const int maxAttempts = 10;
+
+    for (var attempt = 1; ; attempt++)
     {
-        var context = services.GetRequiredService<AppDbContext>();
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while migrating the database.");
+        try
+        {
+            context.Database.Migrate();
+            logger.LogInformation("Database migrations applied.");
+            break;
+        }
+        catch (Exception ex) when (attempt < maxAttempts)
+        {
+            // 2s, 4s, 6s … capped, so a cold database gets ~2 minutes to wake.
+            var delay = TimeSpan.FromSeconds(Math.Min(attempt * 2, 15));
+            logger.LogWarning(
+                ex,
+                "Migration attempt {Attempt}/{Max} failed; retrying in {Delay}s.",
+                attempt, maxAttempts, delay.TotalSeconds);
+            Thread.Sleep(delay);
+        }
     }
 }
 
