@@ -7,4 +7,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
+  <!-- The test project lives inside this folder, so the SDK's default glob
+       would compile its files into this console app too — which fails, because
+       the console app has no xunit reference. -->
+  <ItemGroup>
+    <Compile Remove="BankAccount.Tests/**" />
+    <None Remove="BankAccount.Tests/**" />
+  </ItemGroup>
+
 </Project>
