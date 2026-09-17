@@ -4,7 +4,7 @@ A RESTful Web API built with ASP.NET Core following the official Microsoft tutor
 
 ## Tech Stack
 
-- .NET 9 / ASP.NET Core
+- .NET 10 / ASP.NET Core
 - Entity Framework Core (InMemory)
 - Swagger / OpenAPI (NSwag)
 - C#
@@ -23,7 +23,7 @@ A RESTful Web API built with ASP.NET Core following the official Microsoft tutor
 
 ### Prerequisites
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Visual Studio Code](https://code.visualstudio.com/) with C# Dev Kit
 
 ### Run the app
@@ -33,12 +33,6 @@ dotnet run --launch-profile https
 ```
 
 Then navigate to `https://localhost:{port}/swagger` to interact with the API via Swagger UI.
-
-### Run the tests
-
-```bash
-dotnet test
-```
 
 ## Project Structure
 
