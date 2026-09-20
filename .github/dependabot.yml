@@ -1,0 +1,12 @@
+version: 2
+updates:
+  # Also bumps the commit SHAs that the workflow pins.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+  - package-ecosystem: docker
+    directory: /WebAPI/TaskManagerAPI
+    schedule: { interval: weekly }
+  - package-ecosystem: nuget
+    directory: /WebAPI/TaskManagerAPI
+    schedule: { interval: weekly }

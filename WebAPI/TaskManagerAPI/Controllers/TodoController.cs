@@ -1,23 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TaskManagerAPI.Auth;
 using TaskManagerAPI.Data;
 using TaskManagerAPI.Dtos;
 
 namespace TaskManagerAPI.Controllers;
 
 /*
- * On CSRF: static analysis flags the write endpoints here for missing
- * antiforgery token validation. That rule assumes the browser attaches ambient
- * credentials — a cookie or Windows auth — to a cross-site request, which is
- * what lets an attacker's page act as the victim.
+ * Authentication: reads are public; POST, PUT and DELETE require an API key in
+ * the X-Api-Key header (see Auth/RequireApiKeyAttribute.cs), and are rejected
+ * outright if no key is configured.
  *
- * This service has no authentication, no cookies and no session state, so
- * there are no ambient credentials to ride on and nothing an attacker gains by
- * forging a request they could simply send themselves. Adding
- * [ValidateAntiForgeryToken] would also break the API for its actual clients,
- * since a JSON caller has no way to obtain a token.
- *
- * If authentication is ever added, this decision has to be revisited.
+ * On CSRF: static analysis flags the write endpoints for missing antiforgery
+ * token validation. That rule assumes the browser attaches ambient credentials
+ * (a cookie or Windows auth) to a cross-site request. The key here is a custom
+ * header that a browser never adds by itself, and a cross-origin page cannot set
+ * it without passing the CORS preflight, so there is no ambient credential to
+ * ride on. Adding [ValidateAntiForgeryToken] would also break JSON API clients.
+ * If cookie-based auth is ever added, this decision has to be revisited.
  */
 
 /// <summary>
@@ -73,6 +73,8 @@ public class TodoController : ControllerBase
     /// <summary>Creates a task and returns 201 with its location.</summary>
     // POST: api/todo
     [HttpPost]
+    [RequireApiKey]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ToDo>> CreateTask(CreateTodoRequest request)
@@ -95,6 +97,8 @@ public class TodoController : ControllerBase
     /// <summary>Replaces a task. 404 if absent, 204 on success.</summary>
     // PUT: api/todo/5
     [HttpPut("{id:int}")]
+    [RequireApiKey]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -120,6 +124,8 @@ public class TodoController : ControllerBase
     /// <summary>Deletes a task. 404 if absent, 204 on success.</summary>
     // DELETE: api/todo/5
     [HttpDelete("{id:int}")]
+    [RequireApiKey]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteTask(int id)
