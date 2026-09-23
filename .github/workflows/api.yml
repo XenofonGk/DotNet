@@ -122,6 +122,11 @@ jobs:
   # Publishes the image the home server pulls. Runs only after the contract
   # tests pass, only for a push to main (never a pull request), and is the only
   # job with package-write access.
+  #
+  # Supply chain, in order: build locally -> Trivy scan gates the push ->
+  # push with SBOM + SLSA provenance attestations -> cosign keyless signature
+  # bound to THIS workflow's identity. The server verifies that signature
+  # before it will run the image (scripts/deploy-pull.sh in Home-server).
   publish:
     needs: contract
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -129,8 +134,31 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write   # cosign keyless signing (OIDC), nothing else uses this
+    env:
+      IMAGE: ghcr.io/xenofongk/taskmanagerapi
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      # Build once into the local daemon so the scan can gate the push.
+      - name: Build (local, for scanning)
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: WebAPI/TaskManagerAPI
+          load: true
+          tags: ${{ env.IMAGE }}:scan
+          cache-to: type=gha,mode=max
+          cache-from: type=gha
+
+      - name: Trivy image scan (fails on fixable HIGH/CRITICAL)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE }}:scan
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
 
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
@@ -140,13 +168,26 @@ jobs:
 
       # sha-<commit> is the immutable tag (use it to roll back); prod is the
       # moving tag the server's timer follows.
-      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+      - name: Push
+        id: push
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: WebAPI/TaskManagerAPI
           push: true
+          sbom: true
+          provenance: mode=max
+          cache-from: type=gha
           tags: |
-            ghcr.io/xenofongk/taskmanagerapi:sha-${{ github.sha }}
-            ghcr.io/xenofongk/taskmanagerapi:prod
+            ${{ env.IMAGE }}:sha-${{ github.sha }}
+            ${{ env.IMAGE }}:prod
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
+
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+        with:
+          cosign-release: v3.1.3
+
+      # Sign the digest, never a tag: a tag can be moved, a digest cannot.
+      - name: Sign image (keyless)
+        run: cosign sign --yes "${IMAGE}@${{ steps.push.outputs.digest }}"
