@@ -34,7 +34,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(PortfolioCors, policy => policy
         .WithOrigins(allowedOrigins)
         .WithMethods("GET", "POST", "PUT", "DELETE")
-        .WithHeaders("Content-Type"));
+        .WithHeaders("Content-Type", "X-Api-Key"));
 });
 
 // OpenAPI document at /openapi/v1.json
@@ -43,6 +43,17 @@ builder.Services.AddOpenApi();
 var app = builder.Build();
 
 app.MapOpenApi();
+
+// Interactive docs. Reads work for anyone; writes need the X-Api-Key header, so
+// "Try it out" on POST/PUT/DELETE returns 401 unless a key is supplied.
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/openapi/v1.json", "TaskManager API v1");
+    options.DocumentTitle = "TaskManager API";
+    options.RoutePrefix = "swagger";
+});
+
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 if (app.Environment.IsDevelopment())
 {
