@@ -10,3 +10,15 @@ updates:
   - package-ecosystem: nuget
     directory: /WebAPI/TaskManagerAPI
     schedule: { interval: weekly }
+    groups:
+      # EF Core packages must move together: bumping Design alone pulls in a newer
+      # EF Core transitively and fails restore with NU1605 (package downgrade).
+      ef-core:
+        patterns:
+          - "Microsoft.EntityFrameworkCore*"
+          - "Npgsql.EntityFrameworkCore.PostgreSQL"
+    ignore:
+      # ASP.NET Core 10's OpenAPI source generator targets Microsoft.OpenApi 2.x;
+      # 3.x breaks the build. Revisit when moving to ASP.NET Core 11.
+      - dependency-name: "Microsoft.OpenApi"
+        update-types: ["version-update:semver-major"]
