@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [main]
     paths: ['WebAPI/**', '.github/workflows/api.yml']
+  # Weekly rebuild so base-image security fixes ship without a code change.
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
 
 # Only ever reads the repository.
 permissions:
@@ -129,7 +133,7 @@ jobs:
   # before it will run the image (scripts/deploy-pull.sh in Home-server).
   publish:
     needs: contract
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -146,6 +150,7 @@ jobs:
       - name: Build (local, for scanning)
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
+          pull: true
           context: WebAPI/TaskManagerAPI
           load: true
           tags: ${{ env.IMAGE }}:scan
@@ -172,6 +177,7 @@ jobs:
         id: push
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
+          pull: true
           context: WebAPI/TaskManagerAPI
           push: true
           sbom: true
