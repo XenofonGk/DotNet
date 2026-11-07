@@ -20,12 +20,28 @@ None of the projects in this repository commit real connection strings, password
 
 A small ASP.NET Core Web API for managing to-do tasks, fully containerized with Docker.
 
-**What it does:** exposes a `Tasks` resource backed by PostgreSQL via Entity Framework Core. Currently implemented endpoints:
+**What it does:** exposes a `Tasks` resource backed by PostgreSQL via Entity Framework Core.
 
-- `GET /api/todo` — list all tasks
-- `POST /api/todo` — create a task
+| Endpoint | Auth | Description |
+|---|---|---|
+| `GET /api/todo` | — | List all tasks |
+| `GET /api/todo/{id}` | — | Get one task, 404 if absent |
+| `POST /api/todo` | `X-Api-Key` | Create a task |
+| `PUT /api/todo/{id}` | `X-Api-Key` | Replace a task, 404 if absent |
+| `DELETE /api/todo/{id}` | `X-Api-Key` | Delete a task, 404 if absent |
+| `GET /health` | — | Liveness check, returns `{"status":"healthy"}` |
+
+Reads are public; writes require a matching `X-Api-Key` header, checked with a
+constant-time comparison (`CryptographicOperations.FixedTimeEquals` over the
+SHA-256 of both sides) so the check can't leak timing information about the
+key. If no key is configured, writes fail closed — every POST/PUT/DELETE is
+rejected rather than silently left open. See `Auth/RequireApiKeyAttribute.cs`.
 
 Database migrations are applied automatically on application startup (see `Program.cs`).
+
+**Live:** a Swagger UI for this API runs at [tasks.xgbuilds.dev/swagger](https://tasks.xgbuilds.dev/swagger), deployed from this repo to my home server.
+
+**CI:** every push to `WebAPI/**` runs the full endpoint contract against a real PostgreSQL container (not mocks, not a different provider) — every status code above, the auth checks on each write endpoint, and that the server (not the client) owns `id`/`createdAt`. See `.github/workflows/api.yml`.
 
 **Stack:** ASP.NET Core (.NET 10), Entity Framework Core, Npgsql (PostgreSQL provider), Docker & Docker Compose.
 
