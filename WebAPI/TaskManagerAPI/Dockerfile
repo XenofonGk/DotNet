@@ -7,7 +7,7 @@ COPY . .
 RUN dotnet publish -c Release -o out
 
 # Use the runtime image to run the app
-FROM mcr.microsoft.com/dotnet/aspnet:10.0
+FROM mcr.microsoft.com/dotnet/aspnet:11.0
 # Base images lag behind Ubuntu security fixes; pick them up at build time.
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
