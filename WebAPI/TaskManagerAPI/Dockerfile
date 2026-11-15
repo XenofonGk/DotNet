@@ -1,5 +1,5 @@
 # Official .NET 10 SDK to build the app
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /app
 
 # Copy everything and restore/publish
